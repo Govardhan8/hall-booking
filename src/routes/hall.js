@@ -9,8 +9,8 @@ import express from 'express'
 
 const router = express.Router()
 
-//To add/get halls data
-router.route('/add').post(async (request, response) => {
+//To add hall data
+router.post('/add', async (request, response) => {
 	const body = request.body
 	const result = await addHall(body)
 	response.send(result)
@@ -27,8 +27,8 @@ router.post('/booking/:id', async (request, response) => {
 	const body = request.body
 
 	if (result) {
-		body.startTime = new Date(`${body.date}T${body.startTime}:00:00Z`)
-		body.endTime = new Date(`${body.date}T${body.endTime}:00:00Z`)
+		body.startTime = new Date(`${body.date}T${body.startTime}Z`)
+		body.endTime = new Date(`${body.date}T${body.endTime}Z`)
 		body.date = new Date(body.date)
 
 		if (isHallAvailable(result.bookings, body)) {
